@@ -1,11 +1,12 @@
 """
 Abstract base classes for AI providers.
 
-Two interfaces:
+Three interfaces:
 - BaseReasoningProvider: text generation, reasoning, vision/multimodal analysis.
 - BaseImageProvider: image generation from text prompts.
+- BaseAudioProvider: audio/music generation from text prompts.
 
-All concrete providers inherit from one (or both) of these bases.
+All concrete providers inherit from one (or more) of these bases.
 """
 
 from abc import ABC, abstractmethod
@@ -97,4 +98,45 @@ class BaseImageProvider(ABC):
     @classmethod
     @abstractmethod
     def from_config(cls, config: dict) -> "BaseImageProvider":
+        """Instantiate the provider from a configuration dictionary."""
+
+
+class BaseAudioProvider(ABC):
+    """Base class for audio/music generation providers.
+
+    Implementations: SunoProvider.
+    """
+
+    @abstractmethod
+    def generate_audio(
+        self,
+        prompt: str,
+        title: Optional[str] = None,
+        tags: Optional[str] = None,
+        duration: Optional[int] = None,
+        instrumental: bool = False,
+    ) -> bytes:
+        """Generate audio from a text prompt.
+
+        Args:
+            prompt: Description of the music or lyrics.
+            title: Optional song title.
+            tags: Optional genre/style tags.
+            duration: Optional duration in seconds.
+            instrumental: If True, generate instrumental only.
+
+        Returns:
+            Raw audio data (MP3 bytes).
+        """
+
+    def save_audio(self, data: bytes, path: str) -> Path:
+        """Write audio bytes to disk."""
+        dest = Path(path)
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        dest.write_bytes(data)
+        return dest
+
+    @classmethod
+    @abstractmethod
+    def from_config(cls, config: dict) -> "BaseAudioProvider":
         """Instantiate the provider from a configuration dictionary."""
