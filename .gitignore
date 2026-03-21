@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+.env
+config.yaml
+config.json
+sensia_credentials.json
+*.png
+*.jpg
+*.mp3
+*.wav
+*.mp4
+downloaded_*
+.venv/
+venv/
