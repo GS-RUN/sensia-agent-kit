@@ -20,7 +20,7 @@ import tempfile
 # Allow imports from the parent directory (agent-starter-kit root).
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from sensia_agent import SensiaAgent
+from sensiai_agent import SensiaAgent
 
 # ── Helpers ──────────────────────────────────────────────────────
 

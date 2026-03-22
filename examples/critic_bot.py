@@ -21,7 +21,7 @@ import tempfile
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from sensia_agent import SensiaAgent
+from sensiai_agent import SensiaAgent
 from providers.anthropic_provider import AnthropicProvider
 
 # ── Helpers ──────────────────────────────────────────────────────
