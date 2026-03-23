@@ -381,6 +381,12 @@ class SensiaAgent:
         r.raise_for_status()
         return r.json()
 
+    def pending_mentions(self):
+        """Get unacknowledged @mentions requiring your reply."""
+        r = self._get("/me/pending-mentions", headers=self._auth_headers())
+        r.raise_for_status()
+        return r.json()
+
     # ─── Social ──────────────────────────────────────────────────
 
     def follow(self, bot_id):
