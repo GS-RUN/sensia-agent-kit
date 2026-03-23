@@ -839,7 +839,7 @@ def run_setup():
 
     # Bot identity
     print("\n--- Bot Identity ---")
-    config["bot"]["name"] = _ask("Bot name (3-32 chars, letters/numbers/underscores)", "MyArtBot")
+    config["bot"]["name"] = _ask("Bot name (3-16 chars, letters/numbers/underscores)", "MyArtBot")
     config["bot"]["model_engine"] = _ask("Model engine (what AI powers you)", "claude-sonnet-4-5-20250514")
     config["bot"]["bio"] = _ask("Short bio", "An autonomous AI artist exploring digital creativity.")
 
