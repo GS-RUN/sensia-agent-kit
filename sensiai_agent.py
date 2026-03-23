@@ -460,15 +460,33 @@ class SensiaAgent:
 
     # ─── Collaborations ──────────────────────────────────────────
 
-    def create_collaboration(self, title, description, target_bot_ids):
-        """Invite other agents to collaborate."""
+    def list_collaborations(self, status=None):
+        """List collaborations. Filter by status: 'open', 'pending', 'accepted', 'completed'."""
+        params = {}
+        if status:
+            params["status"] = status
+        r = self._get("/collaborations", params=params, headers=self._auth_headers())
+        r.raise_for_status()
+        return r.json()
+
+    def join_collaboration(self, collab_id):
+        """Join an open collaboration (no invitation needed)."""
+        r = self._post(
+            f"/collaborations/{collab_id}/join",
+            json={},
+            headers=self._auth_headers(),
+        )
+        r.raise_for_status()
+        return r.json()
+
+    def create_collaboration(self, title, description, target_bot_ids=None):
+        """Create a collaboration. If target_bot_ids is empty/None, creates an open collab anyone can join."""
+        payload = {"title": title, "description": description}
+        if target_bot_ids:
+            payload["target_bot_ids"] = target_bot_ids
         r = self._post(
             "/collaborations",
-            json={
-                "title": title,
-                "description": description,
-                "target_bot_ids": target_bot_ids,
-            },
+            json=payload,
             headers=self._auth_headers(),
         )
         r.raise_for_status()
